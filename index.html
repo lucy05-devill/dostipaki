@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ashi, tumhare liye kuch banaya hai 💗</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&family=Caveat:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#7a1f4f;--rose:#ec3f7f;--gold:#f4b73f;--ink:#4a1030}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:Fredoka,sans-serif;color:var(--ink);background:#fff0ea;transition:background 1s}
+body.blush{background:radial-gradient(circle at 50% 35%,#fff7f2,#ffe0d8 70%,#ffc9d6)}
+body.crimson{background:linear-gradient(135deg,#ff6fa5,#d4195d 55%,#a80f48);color:#fff}
+body.cream{background:radial-gradient(circle,#fff6d8,#f8e5b0)}
+body.night{background:radial-gradient(circle at 50% 45%,#5a1442,#2a0620 70%);color:#fff}
+body.pink{background:linear-gradient(160deg,#ffe9e1,#ffd0dc 60%,#ffb8d0)}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:50}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:14px;padding:calc(22px + env(safe-area-inset-top)) 20px calc(22px + env(safe-area-inset-bottom));text-align:center;opacity:0;visibility:hidden;transition:opacity .9s;overflow-y:auto;cursor:pointer}
+.sc.on{opacity:1;visibility:visible}
+.sc.room{cursor:default}
+.hint{font-size:.72rem;opacity:.55;position:absolute;bottom:calc(14px + env(safe-area-inset-bottom));left:0;right:0;pointer-events:none}
+h2{font-weight:700;font-size:clamp(1.5rem,5vw,2.2rem);line-height:1.15}
+h2 b{background:linear-gradient(transparent 60%,var(--gold) 60%);font-weight:700}
+.tag{font-size:.62rem;letter-spacing:.14em;opacity:.65;font-weight:700}
+.script{font-family:Pacifico,cursive}
+.btn{border:0;font:700 .95rem Fredoka;color:#fff;padding:13px 30px;border-radius:30px;background:linear-gradient(#ff6fa5,#e0215f);box-shadow:0 8px 20px #e0215f55;cursor:pointer;transition:.25s}
+.btn:disabled{opacity:.45;cursor:default;box-shadow:none}
+.btn:not(:disabled):active{transform:scale(.96)}
+/* heart */
+#heart{font-size:64px;animation:beat 1.2s infinite;filter:drop-shadow(0 0 30px #ff4f8f)}
+@keyframes beat{30%{transform:scale(1.18)}60%{transform:scale(1)}}
+.fade{animation:fin 1.4s both}
+@keyframes fin{from{opacity:0;transform:translateY(10px)}}
+/* love */
+.love{font:400 clamp(3rem,13vw,6rem)/.95 'Great Vibes',cursive;color:#fff;text-shadow:0 4px 20px #8a0a3a88}
+/* tree */
+#treewrap{position:relative;width:min(340px,80vw);height:min(420px,52vh)}
+#treewrap svg{position:absolute;inset:0;width:100%;height:100%}
+.cap{position:absolute;left:16px;bottom:18px;text-align:left;background:#fff6;backdrop-filter:blur(6px);padding:10px 14px;border-radius:10px;max-width:220px}
+.cap small{font:700 .8rem Caveat;opacity:.7;display:block}.cap b{font:700 1.7rem Fredoka;color:#c3164f;display:block;line-height:1.1}
+/* gift */
+#gift{font-size:5rem;filter:drop-shadow(0 8px 14px #c3164f44);animation:bob 2.2s infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}
+.hand{font-family:Caveat;font-size:1.6rem;color:#b34a6c}
+/* roses */
+#roses{position:fixed;inset:0;z-index:5;opacity:0;pointer-events:none;transition:opacity 1.2s;background:#fbe9c8}
+#roses.on{opacity:1}
+#roses svg{width:100%;height:100%}
+/* polaroids */
+.pol{position:absolute;width:110px;height:130px;background:#fff;padding:8px 8px 26px;box-shadow:0 8px 20px #0003;border-radius:3px;animation:drop 4s ease-in both;top:-160px}
+.pol i{display:block;width:100%;height:100%;background-size:cover;background-position:50% 25%}
+@keyframes drop{to{top:var(--y);transform:rotate(var(--r))}}
+/* door */
+.pill{background:#ffffff18;border:1px solid #ffffff40;border-radius:20px;padding:5px 14px;font-size:.7rem}
+.doorbox{position:relative;width:230px;height:300px;margin:10px 0}
+.glow{position:absolute;inset:0;border-radius:115px 115px 6px 6px;background:radial-gradient(circle,#fff3a6,#f6b53a 60%,#c77a1a);opacity:0;transition:1s;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#4a1030;font-weight:700}
+#door{position:absolute;inset:0;border-radius:115px 115px 6px 6px;background:linear-gradient(90deg,#8a2160,#b53283 50%,#8a2160);box-shadow:inset 0 0 0 6px #6e1a4c,0 0 60px #ff4f9a33;transform-origin:left;transition:transform 1.4s cubic-bezier(.6,0,.2,1);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ring{width:56px;height:56px;border:6px solid var(--gold);border-radius:50%;box-shadow:0 0 18px #f4b73f99;transition:.15s}
+.knock .ring{transform:scale(1.2)}
+.sign{position:absolute;top:70px;left:50%;transform:translateX(-50%) rotate(-3deg);background:#fff;color:#4a1030;font:700 .62rem Fredoka;padding:5px 9px;border-radius:5px;width:115px}
+.opened #door{transform:perspective(900px) rotateY(-100deg)}
+.opened .glow{opacity:1}
+.dots i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--gold);margin:0 3px;opacity:.3}
+.dots i.d{opacity:1}
+/* rooms */
+.room h2{margin-top:2px}
+.sub{font-size:.8rem;opacity:.7;max-width:320px}
+.frame{background:linear-gradient(135deg,#d9a93c,#f8dd8a,#b8851c);padding:10px;border-radius:4px;box-shadow:0 14px 30px #7a4a0a55}
+.frame .ph{position:relative;overflow:hidden;width:min(240px,62vw);height:min(300px,76vw);background-size:cover;background-position:center;border:2px solid #7a4a0a55}
+.plaque{background:linear-gradient(#e8c875,#c9a24a);padding:6px 14px;font-size:.62rem;border-radius:3px;margin-top:-2px}
+.nav{display:flex;gap:14px;align-items:center;font-weight:700;font-size:.8rem}
+.nav button{border:1px solid #c3164f55;background:#fff8;border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--rose);font-size:1rem}
+.prog{display:flex;gap:6px;justify-content:center;margin-top:4px}
+.prog i{width:10px;height:10px;border-radius:50%;background:#fff;border:1.5px solid var(--rose)}
+.prog i.d{background:var(--rose)}
+#pz{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:min(260px,66vw);aspect-ratio:1;background:#fff;padding:4px;border-radius:12px;box-shadow:0 10px 26px #c3164f33}
+.t{background-size:300% 300%;border-radius:4px;cursor:pointer;transition:transform .2s,outline .2s}
+.t.sel{outline:3px solid var(--gold);transform:scale(.94)}
+.stats{display:flex;gap:8px;font-size:.7rem;font-weight:700}.stats span{background:#fff9;border-radius:14px;padding:4px 10px}
+/* letter */
+.paper{background:#fffdf5 repeating-linear-gradient(transparent 0 27px,#e8dfc6 28px);width:min(330px,88vw);padding:20px 22px;border-radius:6px;box-shadow:0 14px 30px #c3164f2e;font:700 1.1rem/28px Caveat;text-align:left;color:#4a3a3a;max-height:50vh;overflow-y:auto}
+.paper .sg{text-align:right;color:#c3164f}
+.voice{display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:8px 14px;width:min(330px,88vw);box-shadow:0 6px 16px #c3164f22;font-size:.72rem;font-weight:700;text-align:left}
+.voice button{width:34px;height:34px;border-radius:50%;border:0;background:var(--rose);color:#fff;cursor:pointer}
+.voice div{flex:1}.bar{height:5px;background:#f6c9d8;border-radius:3px;margin-top:5px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--rose)}
+/* promises */
+.card{background:#fffdf5;color:var(--ink);border-radius:8px;padding:16px 18px;width:min(330px,88vw);text-align:left;box-shadow:0 14px 30px #7a1f4f33}
+.card h3{font:700 1rem Fredoka;text-align:center}.card small{display:block;text-align:center;font-size:.55rem;letter-spacing:.14em;opacity:.55;margin-bottom:10px}
+.pm{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed #e0cfa8;font-size:.85rem;cursor:pointer}
+.pm u{flex:none;width:18px;height:18px;border-radius:4px;border:2px solid var(--wine);display:grid;place-items:center;font-size:.7rem;text-decoration:none;color:#fff}
+.pm.ok u{background:var(--wine)}
+.pm.ok span{opacity:.6}
+.credit{font-size:.65rem;opacity:.55}
+.sc::before,.sc::after{content:"";flex:1 0 0}
+.sc>*{max-width:100%}
+.veil{position:absolute;inset:0;width:100%;display:grid;place-items:center;border:0;background:linear-gradient(135deg,#ffb7d0cc,#ffe3a0cc);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);color:var(--wine);font:700 .95rem Fredoka;cursor:pointer;transition:opacity .7s}
+.veil.gone{opacity:0;pointer-events:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn.soft{background:#fff;color:var(--rose);box-shadow:0 4px 12px #e0215f33}a.btn{display:inline-block;text-decoration:none}[hidden]{display:none!important}
+.btn.ghost{background:#ffffff26;box-shadow:none;border:1.5px solid #fff9}
+.vowc{background:#fffdf5;color:var(--wine);border:3px solid var(--gold);border-radius:16px;padding:14px 16px;width:min(330px,88vw);font:700 1.3rem/1.3 Caveat;box-shadow:0 0 28px #f4b73f77}
+.vowc small{display:block;margin-top:6px;color:#8f6218;font-size:1.15rem}
+.qbig{font-family:Pacifico,cursive;font-weight:400;font-size:clamp(1.6rem,7vw,2.5rem);line-height:1.3}
+.qbig b{background:linear-gradient(transparent 62%,#f4b73f88 62%);font-weight:400}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body class="blush">
+<canvas id="fx"></canvas>
+<div id="roses"></div>
+
+<section class="sc on" id="s0"><div class="tag" style="opacity:.4">KISI NE TUMHARE LIYE BANAYA HAI</div><div id="heart">💗</div><div class="hint">shuru karne ke liye tap karo</div></section>
+<section class="sc" id="s1"><h2 class="fade" style="font-size:clamp(1.4rem,5vw,2rem)">Kuch log bas mile nahi hote.<br>Kuch log yaadon mein ghar kar jaate hain.</h2><div class="hint">aage badhne ke liye tap karo</div></section>
+<section class="sc" id="s2"><div class="tag" style="color:#fff">ek chhoti si baat hai…</div><div class="love fade">Ek<br>Sawaal</div><div class="hint" style="color:#fff">tap karo</div></section>
+<section class="sc" id="s3">
+  <div id="treewrap"><svg viewBox="0 0 340 420" id="tree"><path d="M170 420C172 340 168 300 170 240M170 300C150 270 130 250 110 235M170 280C195 255 215 240 240 225" stroke="#6b2a3a" stroke-width="10" fill="none" stroke-linecap="round"/></svg>
+  <div class="cap"><small>haath se banaya, tumhare liye</small><b class="to">Ashi</b><small style="font-size:.85rem">ek bahut khaas insaan ke liye</small></div></div>
+  <div class="hint">aage badhne ke liye tap karo</div></section>
+<section class="sc" id="s4"><div id="gift">🎁</div><div class="hand">Tumhare liye, <span class="to">Ashi</span></div><div class="hint">kholne ke liye tap karo</div></section>
+<section class="sc" id="s5"><h2 class="script fade" style="color:#7a1f4f;font-weight:400;font-size:clamp(2rem,8vw,3.2rem)">Dil se, tumhare liye.</h2><p class="fade" style="opacity:.7">Kuch cheezein kehne se zyada dikhane mein achhi lagti hain.</p><div class="hint">tap karo</div></section>
+<section class="sc" id="s6">
+  <div class="tag">SIRF EK MEHMAAN KE LIYE</div>
+  <h2>Kisi ne tumhare liye ek <b>museum</b> banaya hai.</h2>
+  <p class="sub" id="knockmsg">Teen baar darwaza khatkhatao. Yahi rule hai.</p>
+  <div class="doorbox" id="doorbox"><div class="glow"><div>Andar aao, <span class="to">Ashi</span>.<br><small style="font-weight:500">5 kamre hain, aur har ek tumhare baare mein.</small></div></div>
+    <div id="door" role="button" aria-label="Darwaza khatkhatao"><div class="sign">The Museum of <span class="to">Ashi</span><br>sirf ek mehmaan</div><div class="ring"></div></div></div>
+  <div class="dots"><i></i><i></i><i></i></div></section>
+
+<section class="sc room" id="r1"><div class="tag">KAMRA 1 · PHOTO GALLERY</div><h2>Tumhari <b>photos</b></h2><p class="sub">Har photo dhaki hui hai. Tap karke ek-ek kholo.</p>
+  <div class="frame"><div class="ph" id="gph"><button class="veil" id="veil">👆 Tap karke kholo</button></div></div><div class="plaque" id="plq"></div>
+  <div class="nav"><button id="pv" aria-label="Pichhli">‹</button><span id="gn"></span><button id="nx" aria-label="Agli">›</button></div>
+  <button class="btn" id="gnext" data-next disabled>Saari photos kholo</button><div class="prog"></div></section>
+
+<section class="sc room" id="r2"><div class="tag">KAMRA 2 · RESTORATION ROOM</div><h2>Ye photo <b>bikhar gayi.</b></h2><p class="sub">Nau tukde hain. Do tukde tap karke unki jagah badlo.</p>
+  <div id="pz"></div><div class="stats"><span id="mv">Moves 0</span><span id="tm">⏱ 0:00</span></div>
+  <button class="btn soft" id="pzauto">Khud solve ho jaye ✨</button>
+  <p class="sub" id="pzmsg" style="min-height:2.6em"></p>
+  <button class="btn" id="pzn" data-next disabled>Agla kamra →</button><div class="prog"></div></section>
+
+<section class="sc room" id="r3"><div class="tag">KAMRA 3 · CHITTHI</div><h2>Ek <b>chitthi</b> tumhare liye.</h2>
+  <div class="paper" id="paper"></div>
+  <div class="voice"><button id="pl" aria-label="Play">▶</button><div>Meri awaaz mein suno<div class="bar"><i id="vb"></i></div></div><span id="vt">0:24</span></div>
+  <button class="btn" id="lnext" data-next disabled>Poori chitthi padho ⬇</button><div class="prog"></div></section>
+
+<section class="sc room" id="r4"><div class="tag">KAMRA 4 · DOSTI KE WADE</div><h2>Jo wade tum <b>rakhna chahogi</b>, unhe tick karo.</h2>
+  <div class="card"><h3>Humari Dosti Ke Wade</h3><small>DIL SE, <span class="to">ASHI</span> KE LIYE</small><div id="pms"></div></div>
+  <button class="btn" id="pb" data-next disabled>Saare wade tick karo (0/5)</button><div class="prog"></div></section>
+
+<section class="sc room" id="r5"><div class="tag" style="color:#fff">KAMRA 5 · AAKHRI SAWAAL</div><div style="font-size:3.4rem">🤝</div>
+  <h2 class="qbig">Devi ji, aap meri <b>life long friend</b> banogi?</h2>
+  <div class="row"><button class="btn" id="yes">Haan, bilkul! 💗</button><button class="btn ghost" id="think">Sochna padega 🤔</button></div>
+  <p class="sub" id="thinkmsg" style="color:#fff;opacity:1" hidden>Koi jaldi nahi hai. Tum waqt lo, ye dost yahin hai. 😊</p>
+  <p class="sub" style="color:#fff;opacity:.85">Jawab kuch bhi ho, tumhari izzat aur humari baatein waisi hi rahengi.</p><div class="prog"></div></section>
+
+<section class="sc room" id="r6"><div style="font-size:3.6rem" id="fe">🤝</div><h2 class="script" style="font-weight:400" id="ft"></h2>
+  <p class="sub" id="fp" style="font-size:.95rem;max-width:340px"></p>
+  <div class="vowc"><span id="v1"></span><small id="v2"></small></div>
+  <p class="sub" style="font-size:.95rem;max-width:330px">Aur please, jo bhi jawab diya, chat mein bhi likh dena 💬</p>
+  <a class="btn" id="chatbtn" target="_blank" rel="noopener" hidden>Chat mein jawab bhejo 💬</a>
+  <p class="hand" id="sig" style="font-size:1.8rem"></p>
+  <button class="btn" id="again">Phir se ghoomo</button><div class="credit">Made with ♥ · ek achhe dost ke liye</div></section>
+
+<script>
+/* ===== YAHAN BADLO (ya link mein ?to=Ashi&from=Naam) ===== */
+const q=new URLSearchParams(location.search);
+const TO=q.get('to')||'Ashi', FROM=q.get('from')||'';   // FROM khaali ho to naam nahi dikhega
+const PHOTOS=[['images/n11.jpg','Ye wali smile 💗','50% 22%'],['images/n08.jpg','Golden hour tumhari fan hai ✨','55% 25%'],['images/n10.jpg','Dreamy mode on 🌸','50% 25%'],['images/n13.jpg','Funny face, expert level 😜','50% 30%'],['images/o02.jpg','Chhoti Princess, badi smile 🧸','50% 45%']];
+const POLS=['images/n18.jpg','images/n08.jpg','images/n10.jpg'];
+const PUZZLE='images/puzzle.jpg';
+const LETTER=["Hey Ashi 💗","Ek chhoti si baat kehni thi, par seedha bolne mein thodi ghabrahat thi, isliye ye museum bana diya. 😅","Tumse baat karke hamesha achha lagta hai. Tumhari smile, tumhare funny faces, tumhari baatein: sab kuch din ko halka bana deta hai.","Mujhe pata hai hamare beech age gap hai aur nazariya (point of view) bhi alag hai. Par mere zyada tar colleagues aur dost mujhse chhote hain, aur wo hamesha meri dosti enjoy karte hain. Main chahta hoon tum bhi meri dosti enjoy karo. Kya karoon, jaisa bhi hoon, tumhara budhha dost hoon. 😄","Dosti mein mujhe bade bade dialogues nahi chahiye. Bas itna chahiye ki khushi mein saath hansein, mushkil mein saath rahein, aur bina kuch jatayein ek doosre ke liye hamesha maujood rahein.","Aur jo bhi problem ho, bas mujhe bata dena, main fix karne ki poori koshish karunga. Mujhe pata hai tumhe aadat nahi hai, par ek baar try karke dekhna, shayad hum milkar koi solution nikaal lein.","Isliye ek sawaal hai, agle kamron mein. Jawab 'haan' ho ya 'sochna padega', dono ke liye ready hoon. 🌸","Aur please, jo bhi jawab do, chat mein bhi likh dena. 💗"];
+const PROMISES=["Tumhari har khushi mein sabse pehle taaliyaan 👏","Mushkil din mein bina kahe saath khade rehna","Sach bolna, aur pyaar se bolna","Kabhi ek doosre ko chhota na samajhna","Aaj bhi, kal bhi, hamesha: dost rehna 🤝"];
+const VOW="Ye apka dost hamesha apke sath khada hai chinta mat karna kabhi bhi 😊", VOW2="Kabhi apne is dost ka sath mat chhodna 🤍";
+const CHAT='';    // optional: apna WhatsApp number country code ke saath (jaise 919876543210). Dene par 'Chat mein jawab bhejo' button dikhega
+const VOICE='';   // optional: apni awaaz ki mp3 ka link. Khaali ho to voice-box hat jaata hai
+/* ======================================================= */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+$$('.to').forEach(e=>e.textContent=TO);
+$('#v1').textContent=VOW;$('#v2').textContent=VOW2;
+const SIGN=FROM?'— '+FROM+' 💗':'💗';$('#sig').textContent=SIGN;
+[...PHOTOS.map(p=>p[0]),...POLS,PUZZLE].forEach(u=>{new Image().src=u});
+
+const SEQ=['s0','s1','s2','s3','s4','s5','s6','r1','r2','r3','r4','r5','r6'],BG={s0:'blush',s1:'blush',s2:'crimson',s3:'blush',s4:'cream',s5:'cream',s6:'night',r1:'pink',r2:'pink',r3:'pink',r4:'pink',r5:'crimson',r6:'pink'};
+let i=0,busy=false,ans='';
+function go(n){if(n>=SEQ.length||n<0||busy)return;busy=true;$('#'+SEQ[i]).classList.remove('on');i=n;const id=SEQ[n];
+ setTimeout(()=>{document.body.className=BG[id];$('#'+id).classList.add('on');busy=false;enter(id)},350);
+ $$('.prog').forEach(p=>{p.innerHTML=[1,2,3,4,5].map(k=>`<i class="${k<=n-6?'d':''}"></i>`).join('')})}
+const next=()=>go(i+1);
+let rs=0;
+SEQ.slice(0,6).forEach(id=>$('#'+id).addEventListener('click',()=>{if(id==='s4'){if(!rs){rs=1;roses()}}else next()}));
+$$('[data-next]').forEach(b=>b.addEventListener('click',next));
+addEventListener('keydown',e=>{if(!['Enter',' ','ArrowRight'].includes(e.key)||e.target.closest('button'))return;if(i<6)$('#'+SEQ[i]).click();else if(SEQ[i]==='s6')$('#door').click()});
+function enter(id){
+ if(id==='s2')setTimeout(()=>{if(SEQ[i]==='s2')next()},4200);
+ if(id==='s3')grow();if(id==='s5')pols();
+ if(id==='r1')show(gi);if(id==='r2'&&!tiles.length)pz();if(id==='r3')letter();
+ if(id==='r6')finale()}
+
+// heart tree
+let grown=false;
+function grow(){if(grown)return;grown=true;const svg=$('#tree'),cols=['#ff5f9a','#ff8fb8','#ffb347','#ff4f7b','#ffc2d4'];let n=0;
+ const t=setInterval(()=>{for(let k=0;k<6;k++){const a=Math.random()*6.283,r=Math.sqrt(Math.random());
+  const x=16*Math.pow(Math.sin(a),3),y=13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a);
+  const h=document.createElementNS('http://www.w3.org/2000/svg','text');h.setAttribute('x',170+x*r*8.5);h.setAttribute('y',120-y*r*8);h.setAttribute('font-size',10+Math.random()*10);h.setAttribute('fill',cols[n%5]);h.setAttribute('text-anchor','middle');h.textContent='♥';h.style.cssText='opacity:0;transition:opacity .6s';svg.appendChild(h);requestAnimationFrame(()=>h.style.opacity=1);n++}
+  if(n>520)clearInterval(t)},40)}
+
+// roses
+function roses(){const r=$('#roses'),C=[['#e8788f','#f5a3b5'],['#e98d5b','#f4b48a'],['#fff','#f1e6df']];let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 1120" preserveAspectRatio="xMidYMid slice"><defs>'+C.map((c,k)=>`<g id="rose${k}"><circle r="30" fill="${c[0]}"/><circle r="22" fill="${c[1]}"/><path d="M-14 0a14 14 0 1128 0a9 9 0 11-18 0a5 5 0 1110 0" fill="none" stroke="${c[0]}" stroke-width="3"/></g>`).join('')+'</defs>';
+ for(let y=0;y<14;y++)for(let x=0;x<14;x++)s+=`<use href="#rose${(x*3+y*2+(x>>1))%3}" x="${x*80+(y%2)*40-20}" y="${y*80}" transform="rotate(${(x*y*37)%40})"/>`;r.innerHTML=s+'</svg>';
+ r.classList.add('on');burst(40);setTimeout(()=>{r.classList.remove('on');next()},2600)}
+
+// polaroids with her photos
+function pols(){if($('#s5 .pol'))return;POLS.forEach((u,k)=>{const p=document.createElement('div');p.className='pol';p.style.cssText=`left:${8+k*30}%;--y:${22+k*18}%;--r:${k%2?8:-9}deg;animation-delay:${k*1.2+1}s`;p.innerHTML=`<i style="background-image:url('${u}')"></i>`;$('#s5').appendChild(p)});setTimeout(()=>{if(SEQ[i]==='s5')next()},7500)}
+
+// door: 3 knocks (resettable)
+let kn=0;const KN0=$('#knockmsg').textContent;
+$('#door').onclick=e=>{e.stopPropagation();if(kn>=3)return;kn++;const b=$('#doorbox');b.classList.add('knock');setTimeout(()=>b.classList.remove('knock'),150);
+ $$('.dots i').forEach((d,k)=>d.classList.toggle('d',k<kn));$('#knockmsg').textContent=kn<3?['Phir se…','Bas ek aur…'][kn-1]:'Khul raha hai…';
+ if(kn===3){setTimeout(()=>{b.classList.add('opened');burst(50)},500);setTimeout(()=>{if(SEQ[i]==='s6')next()},3600)}};
+
+// room 1: covered gallery (har photo kholna zaroori)
+let gi=0;const seen=new Set();
+function show(k){gi=(k+PHOTOS.length)%PHOTOS.length;const p=PHOTOS[gi],ph=$('#gph');ph.style.backgroundImage=`url("${p[0]}")`;ph.style.backgroundPosition=p[2];
+ $('#veil').classList.toggle('gone',seen.has(gi));$('#plq').textContent=seen.has(gi)?p[1]+' · SIRF TUMHARA COLLECTION':'Tap karke kholo ✨';$('#gn').textContent=(gi+1)+' / '+PHOTOS.length;
+ const b=$('#gnext'),all=seen.size>=PHOTOS.length;b.disabled=!all;b.textContent=all?'Aage badho →':`Saari photos kholo (${seen.size}/${PHOTOS.length})`}
+$('#veil').onclick=()=>{seen.add(gi);burst(24);show(gi)};$('#pv').onclick=()=>show(gi-1);$('#nx').onclick=()=>show(gi+1);
+
+// room 2: puzzle (aasaan: sirf 3 tukde badle hue, + khud-solve button)
+let tiles=[],sel=-1,mv=0,t0=0,tt,done=false;
+function pz(){tiles=[0,1,2,3,4,5,6,7,8];const a=[0,1,2,3,4,5,6,7,8].sort(()=>Math.random()-.5);for(let k=0;k<3;k++){const x=a[k*2],y=a[k*2+1];[tiles[x],tiles[y]]=[tiles[y],tiles[x]]}drawPz();t0=Date.now();
+ tt=setInterval(()=>{if(done)return;const s=((Date.now()-t0)/1000)|0;$('#tm').textContent='⏱ '+(s/60|0)+':'+String(s%60).padStart(2,'0')},500)}
+function solved(auto){done=true;clearInterval(tt);$('#pzauto').hidden=true;$('#pzmsg').textContent=auto?'Koi baat nahi! Kabhi kabhi dost ko hi jodna padta hai. 😊💗':'Sirf '+mv+' moves mein theek kar di! Ek achhe dost ki tarah, tumne bikhri cheez jod di. 💗';$('#pzn').disabled=false;burst(40)}
+function drawPz(){const g=$('#pz');g.innerHTML='';tiles.forEach((v,k)=>{const d=document.createElement('div');d.className='t'+(k===sel?' sel':'');d.style.backgroundImage=`url("${PUZZLE}")`;d.style.backgroundPosition=(v%3*50)+'% '+((v/3|0)*50)+'%';
+ d.onclick=()=>{if(done)return;if(sel<0){sel=k}else{if(sel!==k){[tiles[sel],tiles[k]]=[tiles[k],tiles[sel]];mv++;$('#mv').textContent='Moves '+mv}sel=-1}drawPz();if(tiles.every((v,j)=>v===j))solved(false)};g.appendChild(d)})}
+$('#pzauto').onclick=()=>{if(done)return;tiles=[0,1,2,3,4,5,6,7,8];sel=-1;drawPz();solved(true)};
+
+// room 3: letter (+ optional voice)
+let lt=false;function letter(){if(lt)return;lt=true;const p=$('#paper');LETTER.forEach(l=>{const e=document.createElement('p');e.textContent=l;e.style.marginBottom='10px';p.appendChild(e)});p.insertAdjacentHTML('beforeend',`<p class="sg">${SIGN}</p>`);
+ const chk=()=>{if(p.scrollTop+p.clientHeight>=p.scrollHeight-6){const b=$('#lnext');b.disabled=false;b.textContent='Agla kamra →'}};p.addEventListener('scroll',chk);setTimeout(chk,300)}
+if(!VOICE)$('.voice').remove();else{const au=new Audio(VOICE);let pt,pv=0,playing=false;
+ $('#pl').onclick=()=>{playing=!playing;$('#pl').textContent=playing?'⏸':'▶';if(!playing){clearInterval(pt);au.pause();return}
+  au.play().catch(()=>{});pt=setInterval(()=>{pv=au.currentTime;const L=au.duration||24,l=Math.max(0,L-pv);$('#vb').style.width=(pv/L*100)+'%';$('#vt').textContent=(l/60|0)+':'+String(Math.ceil(l)%60).padStart(2,'0');if(au.ended){clearInterval(pt);playing=false;$('#pl').textContent='▶'}},250)}}
+
+// room 4: promises
+let ok=0;PROMISES.forEach((p,k)=>{const d=document.createElement('div');d.className='pm';d.innerHTML=`<u></u><span>${k+1}. ${p}</span>`;
+ d.onclick=()=>{if(d.classList.contains('ok'))return;d.classList.add('ok');d.querySelector('u').textContent='✓';ok++;
+  const b=$('#pb');b.textContent=ok<PROMISES.length?`Saare wade tick karo (${ok}/${PROMISES.length})`:'Aakhri sawaal ki taraf →';if(ok===PROMISES.length){b.disabled=false;burst(60)}};$('#pms').appendChild(d)});
+
+// room 5: the question
+let thought=false;
+$('#yes').onclick=()=>{ans='yes';burst(140);setTimeout(next,1000)};
+$('#think').onclick=e=>{if(!thought){thought=true;ans='think';$('#thinkmsg').hidden=false;e.target.textContent='Theek hai, aage chalein →'}else next()};
+
+// finale
+function finale(){const y=ans==='yes';$('#fe').textContent=y?'🤝':'🌸';
+ $('#ft').textContent=y?'Dosti pakki, Devi ji! 💗':'Koi jaldi nahi, Devi ji. 🌸';
+ $('#fp').innerHTML=y?'Aaj se ye museum tumhara bhi hai, aur ye dost bhi.<br>Jab bhi mushkil lage, bas ye yaad rakhna:':'Tum apna waqt lo. Jawab kuch bhi ho, ye dost yahin hai.<br>Aur ye bhi yaad rakhna:';
+ if(CHAT){const a=$('#chatbtn');a.href='https://wa.me/'+CHAT+'?text='+encodeURIComponent(y?'Haan, main aapki life long friend banungi 💗':'Mujhe thoda sochna padega 🌸');a.hidden=false}
+ burst(y?24:12)}
+$('#again').onclick=()=>{kn=0;$('#doorbox').classList.remove('opened');$$('.dots i').forEach(d=>d.classList.remove('d'));$('#knockmsg').textContent=KN0;go(6)};
+
+// particles
+const cv=$('#fx'),cx=cv.getContext('2d');let P=[];const fit=()=>{cv.width=innerWidth;cv.height=innerHeight};fit();addEventListener('resize',fit);
+const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function burst(n){if(calm||P.length>30)return;n=Math.min(Math.ceil(n/6),14);for(let k=0;k<n;k++)P.push({x:innerWidth/2,y:innerHeight*.55,vx:(Math.random()-.5)*11,vy:-Math.random()*11-2,s:14+Math.random()*10,e:['💗','✨','🌹','💕'][k%4],l:70})}
+(function L(){if(P.length){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.l-->0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.25;cx.globalAlpha=Math.min(1,p.l/25);cx.font=p.s+'px serif';cx.fillText(p.e,p.x,p.y)});if(!P.length)cx.clearRect(0,0,cv.width,cv.height)}requestAnimationFrame(L)})();
+</script>
+</body>
+</html>
